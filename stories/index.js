@@ -33,7 +33,7 @@ storiesOf("DayListItem", module)
   .add("Selected", () => <DayListItem name="Monday" spots={5} selected />)
   .add("Full", () => <DayListItem name="Monday" spots={0} />)
   .add("Clickable", () => (
-    <DayListItem name="Tuesday" setDay={action("set-day")} spots={5} />
+    <DayListItem name="Tuesday" setDay={action("setDay")} spots={5} />
   ));
 
 const days = [
@@ -59,8 +59,8 @@ storiesOf("DayList", module)
     backgrounds: [{ name: "dark", value: "#222f3e", default: true }]
   })
   .add("Monday", () => (
-    <DayList days={days} day={"Monday"} setDay={action("set-day")} />
+    <DayList days={days} day={"Monday"} setDay={action("setDay")} />
   ))
   .add("Tuesday", () => (
-    <DayList days={days} day={"Tuesday"} setDay={action("set-day")} />
+    <DayList days={days} day={"Tuesday"} setDay={action("setDay")} />
   ));
