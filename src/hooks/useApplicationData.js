@@ -5,6 +5,8 @@ import axios from "axios";
 const SET_DAY = "SET_DAY";
 const SET_APPLICATION_DATA = "SET_APPLICATION_DATA";
 const SET_INTERVIEW = "SET_INTERVIEW";
+const INCREASE_SPOTS = "INCREASE_SPOTS";
+const DECREASE_SPOTS = "DECREASE_SPOTS";
 
 function reducer(state, action) {
   switch (action.type) {
@@ -31,6 +33,26 @@ function reducer(state, action) {
       return {
         ...state,
         appointments
+      };
+    }
+    case INCREASE_SPOTS: {
+      return {
+        ...state,
+        days: state.days.map(day => {
+          return day.appointments.includes(action.id)
+            ? { ...day, spots: day.spots + 1 }
+            : day;
+        })
+      };
+    }
+    case DECREASE_SPOTS: {
+      return {
+        ...state,
+        days: state.days.map(day => {
+          return day.appointments.includes(action.id)
+            ? { ...day, spots: day.spots - 1 }
+            : day;
+        })
       };
     }
     default:
@@ -69,12 +91,14 @@ export default function useApplicationData() {
   function bookInterview(id, interview) {
     return axios.put(`/api/appointments/${id}`, { interview }).then(() => {
       dispatch({ type: SET_INTERVIEW, id, interview });
+      dispatch({ type: DECREASE_SPOTS, id });
     });
   }
 
   function cancelInterview(id) {
     return axios.delete(`/api/appointments/${id}`).then(() => {
       dispatch({ type: SET_INTERVIEW, id, interview: null });
+      dispatch({ type: INCREASE_SPOTS, id });
     });
   }
 
