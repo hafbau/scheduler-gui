@@ -1,10 +1,11 @@
 import React from "react";
+import PropTypes from "prop-types";
 
 import "components/InterviewerList.scss";
 
 import InterviewerListItem from "components/InterviewerListItem";
 
-export default function InterviewerList(props) {
+function InterviewerList(props) {
   const interviewers = props.interviewers.map(interviewer => {
     return (
       <InterviewerListItem
@@ -25,3 +26,10 @@ export default function InterviewerList(props) {
     </section>
   );
 }
+
+InterviewerList.propTypes = {
+  value: PropTypes.number,
+  onChange: PropTypes.func.isRequired
+};
+
+export default InterviewerList;
