@@ -1,10 +1,8 @@
 import React from "react";
 
-import { render, cleanup, fireEvent } from "react-testing-library";
+import { render, fireEvent } from "@testing-library/react";
 
 import Button from "components/Button";
-
-afterEach(cleanup);
 
 it("renders without crashing", () => {
   render(<Button />);
