@@ -14,10 +14,6 @@ describe("Appointment", () => {
     }
   };
 
-  it("renders without crashing", () => {
-    render(<Appointment />);
-  });
-
   it("renders without crashing when the mode is SHOW but the value of interview is null", () => {
     const { getByText, rerender } = render(
       <Appointment interview={interview} />
