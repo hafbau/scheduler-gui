@@ -1,11 +1,17 @@
 import React from "react";
 
-import { render, cleanup } from "react-testing-library";
+import { render, waitForElement, fireEvent } from "@testing-library/react";
 
 import Application from "components/Application";
 
-afterEach(cleanup);
+describe("Application", () => {
+  it("changes the schedule when a new day is selected", () => {
+    const { getByText } = render(<Application />);
 
-it("renders without crashing", () => {
-  render(<Application />);
+    return waitForElement(() => getByText("Archie Cohen")).then(() => {
+      fireEvent.click(getByText("Tuesday"));
+
+      expect(getByText("Leopold Silvers")).toBeInTheDocument();
+    });
+  });
 });
