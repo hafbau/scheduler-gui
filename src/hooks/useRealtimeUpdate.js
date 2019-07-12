@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { SET_INTERVIEW } from "hooks/useApplicationData";
+import { SET_INTERVIEW } from "reducers/application";
 
 export default function useRealtimeUpdate(dispatch) {
   useEffect(() => {
