@@ -77,5 +77,8 @@ export default {
       });
     }
     return Promise.resolve({ data: {} });
+  }),
+  put: jest.fn(url => {
+    return Promise.resolve({ status: 204, statusText: "No Content" });
   })
 };
