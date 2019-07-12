@@ -2,9 +2,11 @@ import { useReducer, useEffect } from "react";
 
 import axios from "axios";
 
-const SET_DAY = "SET_DAY";
-const SET_APPLICATION_DATA = "SET_APPLICATION_DATA";
-const SET_INTERVIEW = "SET_INTERVIEW";
+export const SET_DAY = "SET_DAY";
+export const SET_APPLICATION_DATA = "SET_APPLICATION_DATA";
+export const SET_INTERVIEW = "SET_INTERVIEW";
+
+import useRealTimeUpdate from "hooks/useRealtimeUpdate";
 
 function reducer(state, action) {
   switch (action.type) {
@@ -83,26 +85,7 @@ export default function useApplicationData() {
     );
   }, []);
 
-  useEffect(() => {
-    const socket = new WebSocket(process.env.REACT_APP_WEBSOCKET_URL);
-    socket.onopen = event => {
-      socket.send("ping");
-    };
-
-    socket.onmessage = event => {
-      console.log(`Message Received: ${event.data}`);
-      const { id, interview } = JSON.parse(event.data);
-      dispatch({
-        type: SET_INTERVIEW,
-        id,
-        interview
-      });
-    };
-
-    return () => {
-      socket.close();
-    };
-  }, []);
+  useRealTimeUpdate(dispatch);
 
   function bookInterview(id, interview) {
     return axios.put(`/api/appointments/${id}`, { interview }).then(() => {
