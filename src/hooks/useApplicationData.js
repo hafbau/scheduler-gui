@@ -28,14 +28,26 @@ function reducer(state, action) {
         [action.id]: appointment
       };
 
+      const getSpotsForDay = day =>
+        day.appointments.length -
+        day.appointments.reduce(
+          (count, id) => (appointments[id].interview ? count + 1 : count),
+          0
+        );
+
+      const days = state.days.map(day => {
+        return day.appointments.includes(action.id)
+          ? {
+              ...day,
+              spots: getSpotsForDay(day)
+            }
+          : day;
+      });
+
       return {
         ...state,
         appointments,
-        days: state.days.map(day => {
-          return day.appointments.includes(action.id)
-            ? { ...day, spots: day.spots + (action.interview ? -1 : 1) }
-            : day;
-        })
+        days
       };
     }
     default:
