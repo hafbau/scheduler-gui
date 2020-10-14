@@ -10,6 +10,10 @@ import reducer, {
 
 import useRealTimeUpdate from "hooks/useRealtimeUpdate";
 
+if (process.env.REACT_APP_API_URL) {
+  axios.defaults.baseURL = process.env.REACT_APP_API_URL;
+}
+
 export default function useApplicationData() {
   const [state, dispatch] = useReducer(reducer, {
     day: "Monday",
